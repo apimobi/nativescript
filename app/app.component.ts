@@ -11,6 +11,7 @@ import {ListPage} from "./pages/list/list.component";
   providers: [HTTP_PROVIDERS, NS_ROUTER_PROVIDERS],
   template: "<page-router-outlet></page-router-outlet>"
 })
+
 @RouteConfig([
   { path: "/Login", component: LoginPage, name: "Login", useAsDefault: true },
   { path: "/List", component: ListPage, name: "List" }

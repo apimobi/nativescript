@@ -23,8 +23,10 @@ export class LoginPage implements OnInit {
   @ViewChild("password") password: ElementRef;
 
   constructor(private _router: Router, private _userService: UserService, private page: Page) {
+    var year = new Date();
     this.user = new User();
-    this.user.email = "user@nativescript.org";
+    this.user.email = ""+year.getFullYear();
+    //"user@nativescript.org";
     this.user.password = "password";
   }
 
@@ -76,6 +78,7 @@ export class LoginPage implements OnInit {
   }
 
   setTextFieldColors() {
+
     let emailTextField = <TextField>this.email.nativeElement;
     let passwordTextField = <TextField>this.password.nativeElement;
 

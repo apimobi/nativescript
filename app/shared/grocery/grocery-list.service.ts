@@ -21,6 +21,9 @@ export class GroceryListService {
       let groceryList = [];
       data.Result.forEach((grocery) => {
         groceryList.push(new Grocery(grocery.Id, grocery.Name));
+        groceryList.push(new Grocery(grocery.Id, grocery.Name));
+        groceryList.push(new Grocery(grocery.Id, grocery.Name));
+        groceryList.push(new Grocery(grocery.Id, grocery.Name));
       });
       return groceryList;
     })
