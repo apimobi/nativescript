@@ -1,0 +1,33 @@
+<ActionBar title="Calendar">
+  <ActionItem text="Share" (tap)="share()" android.systemIcon="ic_menu_share_holo_dark" ios.systemIcon="9" ios.position="right"></ActionItem>
+</ActionBar>
+
+<GridLayout columns="*,*" rows="*">
+
+  <GridLayout col="0"  columns="*" rows="*" style="background-color:red">
+    <ListView [items]="tab_month" class="small-spacing" >
+      <template let-item="item" let-i="index" >
+          <StackLayout  (onTap)="updateCalendar(i)" >
+                  <Label [text]='item' ></Label>
+          </StackLayout>
+      </template>
+    </ListView>
+  </GridLayout>
+
+  <GridLayout col="1" columns="*" rows="*" style="background-color:yellow">
+    <ListView [items]="days" class="small-spacing" >
+
+                  <template let-item="item" let-i="index" >
+                      <StackLayout col="i" >
+                          <GridLayout columns="*,*,*,*" rows="auto, *, *">
+                              <Label [text]='item.date' horizontalAlignment="left" col="0"></Label>
+                              <Label [text]='item.month'horizontalAlignment="center" col="1"></Label>
+                              <Label [text]='item.year' horizontalAlignment="right" col="2"></Label>
+                              <Image stretch="none" src="res://apple" horizontalAlignment="right" verticalAlignment="top" col="3"></Image>
+                          </GridLayout>
+                      </StackLayout>
+                  </template>
+
+    </ListView>
+  </GridLayout>
+</GridLayout>

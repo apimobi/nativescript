@@ -4,6 +4,7 @@ import {RouteConfig} from "@angular/router-deprecated";
 import {NS_ROUTER_DIRECTIVES, NS_ROUTER_PROVIDERS} from "nativescript-angular/router";
 import {LoginPage} from "./pages/login/login.component";
 import {ListPage} from "./pages/list/list.component";
+import {CalendarPage} from "./pages/calendar/calendar.component";
 
 @Component({
   selector: "main",
@@ -13,7 +14,8 @@ import {ListPage} from "./pages/list/list.component";
 })
 
 @RouteConfig([
-  { path: "/Login", component: LoginPage, name: "Login", useAsDefault: true },
-  { path: "/List", component: ListPage, name: "List" }
+  { path: "/Login", component: LoginPage, name: "Login"},
+  { path: "/List", component: ListPage, name: "List" },
+  { path: "/Calendar", component: CalendarPage, name: "Calendar", useAsDefault: true  }
 ])
 export class AppComponent {}
