@@ -25,8 +25,7 @@ export class LoginPage implements OnInit {
   constructor(private _router: Router, private _userService: UserService, private page: Page) {
     var year = new Date();
     this.user = new User();
-    this.user.email = ""+year.getFullYear();
-    //"user@nativescript.org";
+    this.user.email = "user@nativescript.org";
     this.user.password = "password";
   }
 

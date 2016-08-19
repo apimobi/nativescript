@@ -1,15 +1,26 @@
 import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {TextField} from "ui/text-field";
 import {Grocery} from "../../shared/grocery/grocery";
+import {AnimationCurve} from "ui/enums";
+import {Image} from "ui/image";
+import {View} from "ui/core/view";
+import {Page} from "ui/page";
+import {SimpleEvent} from "./event/event.component";
+import {GestureTypes, SwipeGestureEventData, GesturesObserver} from "ui/gestures";
+import {registerElement} from "nativescript-angular/element-registry";
+import {MasterPage} from "../masterPage";
+registerElement("event-view", () => SimpleEvent);
+
 
 console.log('`Calendar`');
 
 @Component({
   selector: 'calendar',
   templateUrl: "pages/calendar/calendar.html",
+  directives:[SimpleEvent],
   providers: []
 })
-export class CalendarPage implements OnInit {
+export class CalendarPage extends MasterPage {
 
   today:Date;
   days:Array<Object> = [];
@@ -17,9 +28,12 @@ export class CalendarPage implements OnInit {
   year:Number;
   lastDayMonth:number;
   tab_month:Array<String> = ['January', 'February',  'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  init:Boolean = false;
+  idMonth:number;
 
-  constructor() {
 
+  constructor(page: Page) {
+      super(page);
   }
 
   ngOnInit() {
@@ -31,11 +45,28 @@ export class CalendarPage implements OnInit {
 
   initCalendar(updateDate)
   {
+
+      let image:View = this.container.getViewById("testimage");
+      var animation1 = image.createAnimation({
+        translate: { x: 0, y: 300},
+        duration: 2000,
+        curve: AnimationCurve.easeIn
+      });
+      var animation2 = image.createAnimation({
+        translate: { x: 0, y: 0},
+        duration: 2000,
+        curve: AnimationCurve.easeIn
+      });
+
+      animation1.play().then(()=>animation2.play());
+
+
       this.days = [];
 
       this.today = new Date(updateDate);
       this.month = this.tab_month[this.today.getMonth()];
       this.year = this.today.getFullYear();
+      this.idMonth = this.today.getMonth();
 
       var lastd;
       var firstd;
@@ -86,12 +117,53 @@ export class CalendarPage implements OnInit {
       }
 
     console.log(this.days);
+
+    if(this.init == false)this.init = true;
+
+    image.observe(GestureTypes.swipe, this.callBackGesture, this);
+  }
+
+  callBackGesture(args:SwipeGestureEventData)
+  {
+     console.log("Swipe Direction: " + args.direction);
+     let month = this.idMonth;
+     if(args.direction == 1)
+     {
+        month += 1;
+     }else{
+        month -= 1;
+     }
+     console.log('month :'+month);
+     this.updateCalendar(month);
   }
 
   updateCalendar(id)
   {
      console.log('ouiiiiiiiiii '+id);
-     this.initCalendar('2016/'+(id+1)+'/1');
+     if(this.init)
+     {
+       let monthView = this.container.getViewById("monthView");
+       monthView.animate({
+         translate: { x: 500, y: 0},
+         duration: 700,
+         curve: AnimationCurve.easeIn
+       })
+       .then(() => { this.initCalendar('2016/'+(id+1)+'/1') } )
+       .then( () => { monthView.animate({
+         translate: { x: 0, y: 0},
+         duration: 700,
+         curve: AnimationCurve.easeIn
+       }) } );
+    }else{
+      this.initCalendar('2016/'+(id+1)+'/1');
+    }
+
+
+  }
+
+  onVoted(agreed: boolean)
+  {
+    console.log(agreed);
   }
 
   getClassRow(value, id)

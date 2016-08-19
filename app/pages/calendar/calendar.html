@@ -1,6 +1,6 @@
-<ActionBar title="Calendar">
+<!-- <ActionBar title="Calendar">
   <ActionItem text="Share" (tap)="share()" android.systemIcon="ic_menu_share_holo_dark" ios.systemIcon="9" ios.position="right"></ActionItem>
-</ActionBar>
+</ActionBar> -->
 
 <GridLayout columns="*,*" rows="*">
 
@@ -12,9 +12,11 @@
           </StackLayout>
       </template>
     </ListView>
+    <Image id="testimage" src="res://banana"></Image>
+    <event-view (onVoted)="onVoted($event)"></event-view>
   </GridLayout>
 
-  <GridLayout col="1" columns="*" rows="*" style="background-color:yellow">
+  <GridLayout id="monthView" col="1" columns="*" rows="*" style="background-color:yellow">
     <ListView [items]="days" class="small-spacing" >
 
                   <template let-item="item" let-i="index" >
